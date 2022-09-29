@@ -6,8 +6,8 @@ import { Box, Grid, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { FormTextField } from '../MuiComponents/TextFIeld'
 import { useSnackbarContext } from '../context/Snackbar'
-import UserContext from '../context/User'
-import * as UserService from '../service/user'
+import * as firebaseService from '../service/firebase'
+import { AuthContext } from '../context/AuthContext'
 
 const validationSchema = yup.object({
   email: yup
@@ -22,23 +22,20 @@ const validationSchema = yup.object({
 
 const LoginForm = () => {
   const navigate = useNavigate()
-  const { isUserLoggedIn, setIsUserLoggedIn, setUser, setToken } =
-    useContext(UserContext)
+  const user = useContext(AuthContext)
   const {
     ToastService: { showToast },
   } = useSnackbarContext()
 
   const handleSubmit = (values: any, setSubmitting: any) => {
-    UserService.login(values.email, values.password)
-      .then((response: any) => {
-        setUser(response.data)
-        setToken(response.tokenData)
-        setIsUserLoggedIn(true)
+    firebaseService
+      .login(values.email, values.password)
+      .then(() => {
         setSubmitting(false)
         navigate('/')
       })
       .catch((error: any) => {
-        showToast(true, 'error', 'Log In Failed. Please try again', 'center')
+        showToast(true, 'error', error.code, 'center')
         setSubmitting(false)
       })
   }
@@ -55,10 +52,11 @@ const LoginForm = () => {
   })
 
   useEffect(() => {
-    if (isUserLoggedIn) {
+    if (user) {
       navigate('/')
     }
-  }, [isUserLoggedIn, navigate])
+  }, [user, navigate])
+
   return (
     <Box
       component="form"

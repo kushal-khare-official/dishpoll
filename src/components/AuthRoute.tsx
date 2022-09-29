@@ -1,13 +1,13 @@
+import { useContext } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-
-const SESSION_STORAGE_KEY = 'dishpoll'
+import { AuthContext } from '../context/AuthContext'
 
 const AuthRoute = ({ children }: { children: JSX.Element }) => {
   const location = useLocation()
 
-  const userData = localStorage.getItem(SESSION_STORAGE_KEY)
+  const user = useContext(AuthContext)
 
-  if (!userData) {
+  if (!user) {
     return <Navigate to="/login" state={{ from: location }} />
   }
 

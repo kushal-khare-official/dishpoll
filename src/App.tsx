@@ -5,7 +5,8 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import AuthRoute from './components/AuthRoute'
 import theme from './styles/styles'
-import UserContextProvider from './provider/User'
+import { AuthProvider } from './provider/AuthProvider'
+import SnackbarProvider from './provider/SnackbarProvider'
 
 const Login = lazy(() => import('./pages/Login'))
 const Home = lazy(() => import('./pages/Home'))
@@ -14,62 +15,64 @@ const Results = lazy(() => import('./pages/Results'))
 
 const App = () => {
   return (
-    <UserContextProvider>
+    <AuthProvider>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <Box>
-            <CssBaseline />
+          <SnackbarProvider>
+            <Box>
+              <CssBaseline />
 
-            <Header />
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '70vh',
-                pt: 15,
-                pb: 10,
-              }}
-            >
-              <Container>
-                <Suspense fallback="Loading...">
-                  <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route
-                      path="/"
-                      element={
-                        <AuthRoute>
-                          <Home />
-                        </AuthRoute>
-                      }
-                    />
-                    <Route
-                      path="/vote"
-                      element={
-                        <AuthRoute>
-                          <Vote />
-                        </AuthRoute>
-                      }
-                    />
-                    <Route
-                      path="/results"
-                      element={
-                        <AuthRoute>
-                          <Results />
-                        </AuthRoute>
-                      }
-                    />
-                  </Routes>
-                </Suspense>
-              </Container>
+              <Header />
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  minHeight: '70vh',
+                  pt: 15,
+                  pb: 10,
+                }}
+              >
+                <Container>
+                  <Suspense fallback="Loading...">
+                    <Routes>
+                      <Route path="/login" element={<Login />} />
+                      <Route
+                        path="/"
+                        element={
+                          <AuthRoute>
+                            <Home />
+                          </AuthRoute>
+                        }
+                      />
+                      <Route
+                        path="/vote"
+                        element={
+                          <AuthRoute>
+                            <Vote />
+                          </AuthRoute>
+                        }
+                      />
+                      <Route
+                        path="/results"
+                        element={
+                          <AuthRoute>
+                            <Results />
+                          </AuthRoute>
+                        }
+                      />
+                    </Routes>
+                  </Suspense>
+                </Container>
+              </Box>
+
+              <Outlet />
+
+              <Footer />
             </Box>
-
-            <Outlet />
-
-            <Footer />
-          </Box>
+          </SnackbarProvider>
         </ThemeProvider>
       </BrowserRouter>
-    </UserContextProvider>
+    </AuthProvider>
   )
 }
 

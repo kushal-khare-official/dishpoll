@@ -20,12 +20,14 @@ export const signUp = async (
   password: string,
   confirmPassword: string
 ) => {
-  setCurrentUser({
-    firstName,
-    lastName,
-    email,
-    password,
-  })
+  try {
+    setCurrentUser({
+      email,
+      password,
+    })
+  } catch (error: any) {
+    return error
+  }
 }
 
 export const login = async (email: string, password: string) => {

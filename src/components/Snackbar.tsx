@@ -20,7 +20,7 @@ const Toast = (props: IToastProps) => {
     horizontalAlignment,
     verticalAlignment,
   } = props
-  
+
   return (
     <Snackbar
       anchorOrigin={{
@@ -38,7 +38,7 @@ const Toast = (props: IToastProps) => {
         onClose={() => setOpen(false)}
         severity={type}
       >
-        <Typography>{message}</Typography>
+        <Typography variant="h6">{message}</Typography>
       </Alert>
     </Snackbar>
   )
