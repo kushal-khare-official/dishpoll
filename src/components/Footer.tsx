@@ -1,7 +1,11 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 const Footer = () => {
-  return <Typography variant="h6">Footer</Typography>
+  return (
+    <Box position="absolute" bottom="0">
+      <Typography variant="h6">Footer</Typography>
+    </Box>
+  )
 }
 
 export default Footer

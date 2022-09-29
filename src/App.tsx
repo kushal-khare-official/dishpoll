@@ -1,42 +1,75 @@
-import { Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Outlet, Routes, Route } from 'react-router-dom'
-import { Box, CssBaseline } from '@mui/material'
+import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Login from './pages/Login'
-import Home from './pages/Home'
-import Vote from './pages/Vote'
-import Results from './pages/Results'
+import AuthRoute from './components/AuthRoute'
+import theme from './styles/styles'
+import UserContextProvider from './provider/User'
+
+const Login = lazy(() => import('./pages/Login'))
+const Home = lazy(() => import('./pages/Home'))
+const Vote = lazy(() => import('./pages/Vote'))
+const Results = lazy(() => import('./pages/Results'))
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Box>
-        <CssBaseline />
+    <UserContextProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <Box>
+            <CssBaseline />
 
-        <Header />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '80vh',
-          }}
-        >
-          <Suspense fallback="Loading...">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/vote" element={<Vote />} />
-              <Route path="/results" element={<Results />} />
-            </Routes>
-          </Suspense>
-        </Box>
+            <Header />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '70vh',
+                pt: 15,
+                pb: 10,
+              }}
+            >
+              <Container>
+                <Suspense fallback="Loading...">
+                  <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route
+                      path="/"
+                      element={
+                        <AuthRoute>
+                          <Home />
+                        </AuthRoute>
+                      }
+                    />
+                    <Route
+                      path="/vote"
+                      element={
+                        <AuthRoute>
+                          <Vote />
+                        </AuthRoute>
+                      }
+                    />
+                    <Route
+                      path="/results"
+                      element={
+                        <AuthRoute>
+                          <Results />
+                        </AuthRoute>
+                      }
+                    />
+                  </Routes>
+                </Suspense>
+              </Container>
+            </Box>
 
-        <Outlet />
+            <Outlet />
 
-        <Footer />
-      </Box>
-    </BrowserRouter>
+            <Footer />
+          </Box>
+        </ThemeProvider>
+      </BrowserRouter>
+    </UserContextProvider>
   )
 }
 
