@@ -117,6 +117,22 @@ const LoginForm = () => {
       >
         Log In
       </LoadingButton>
+
+      <Typography
+        variant="h6"
+        component="h3"
+        fontWeight="500"
+        color="text.secondary"
+        paragraph
+      >
+        Don&apos;t have an account?{' '}
+        <span
+          style={{ color: '#0093E3', cursor: 'pointer' }}
+          onClick={() => navigate('/login/signup')}
+        >
+          Sign Up
+        </span>
+      </Typography>
     </Box>
   )
 }

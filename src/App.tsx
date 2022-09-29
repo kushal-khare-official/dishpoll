@@ -35,7 +35,7 @@ const App = () => {
                 <Container>
                   <Suspense fallback="Loading...">
                     <Routes>
-                      <Route path="/login" element={<Login />} />
+                      <Route path="/login/*" element={<Login />} />
                       <Route
                         path="/"
                         element={
