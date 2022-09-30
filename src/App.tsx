@@ -28,8 +28,6 @@ const App = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   minHeight: '70vh',
-                  pt: 15,
-                  pb: 10,
                 }}
               >
                 <Container>
