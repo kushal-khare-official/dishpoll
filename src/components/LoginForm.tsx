@@ -1,4 +1,3 @@
-import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
@@ -6,8 +5,7 @@ import { Box, Grid, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { FormTextField } from '../MuiComponents/TextFIeld'
 import { useSnackbarContext } from '../context/Snackbar'
-import * as firebaseService from '../service/firebase'
-import { AuthContext } from '../context/AuthContext'
+import * as firebaseService from '../service/auth'
 
 const validationSchema = yup.object({
   email: yup
@@ -22,7 +20,6 @@ const validationSchema = yup.object({
 
 const LoginForm = () => {
   const navigate = useNavigate()
-  const user = useContext(AuthContext)
   const {
     ToastService: { showToast },
   } = useSnackbarContext()
@@ -50,12 +47,6 @@ const LoginForm = () => {
       handleSubmit(values, setSubmitting)
     },
   })
-
-  useEffect(() => {
-    if (user) {
-      navigate('/')
-    }
-  }, [user, navigate])
 
   return (
     <Box

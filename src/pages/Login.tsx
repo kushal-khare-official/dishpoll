@@ -1,12 +1,23 @@
-import { Suspense } from 'react'
+import { Suspense, useContext, useEffect } from 'react'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { Grid, Stack } from '@mui/material'
 import LoginForm from '../components/LoginForm'
 import TextWelcome from '../components/TextWelcome'
 import { ImageAndContent } from '../components/ImageAndContent'
-import { Route, Routes } from 'react-router-dom'
 import SignupForm from '../components/SignupForm'
+import { AuthContext } from '../context/AuthContext'
 
-const Login = () => {
+const Login = (props: any) => {
+  const user = useContext(AuthContext)
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    if (user) {
+      navigate(location.state.from.pathname)
+    }
+  })
+
   return (
     <Grid container spacing={8}>
       <Grid item xs={12} sm={6}>

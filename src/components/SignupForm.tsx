@@ -1,4 +1,3 @@
-import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
@@ -6,11 +5,9 @@ import { Box, Grid, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { FormTextField } from '../MuiComponents/TextFIeld'
 import { useSnackbarContext } from '../context/Snackbar'
-import * as firebaseService from '../service/firebase'
-import { AuthContext } from '../context/AuthContext'
+import * as firebaseService from '../service/auth'
 
 function SignUpEmail() {
-  const user = useContext(AuthContext)
   const navigate = useNavigate()
   const {
     ToastService: { showToast },
@@ -65,12 +62,6 @@ function SignUpEmail() {
       handleSubmit(values, setSubmitting)
     },
   })
-
-  useEffect(() => {
-    if (user) {
-      navigate('/')
-    }
-  }, [user, navigate])
 
   return (
     <Box

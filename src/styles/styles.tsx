@@ -69,6 +69,7 @@ let theme = createTheme({
     button: {
       fontSize: 16,
       fontWeight: 500,
+      letterSpacing: '2px',
     },
     subtitle1: {
       fontSize: 12,

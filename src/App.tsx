@@ -1,5 +1,11 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Outlet, Routes, Route } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Outlet,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom'
 import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -9,7 +15,6 @@ import { AuthProvider } from './provider/AuthProvider'
 import SnackbarProvider from './provider/SnackbarProvider'
 
 const Login = lazy(() => import('./pages/Login'))
-const Home = lazy(() => import('./pages/Home'))
 const Vote = lazy(() => import('./pages/Vote'))
 const Results = lazy(() => import('./pages/Results'))
 
@@ -28,8 +33,7 @@ const App = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   minHeight: '70vh',
-                  pt: 15,
-                  pb: 10,
+                  marginTop: '100px',
                 }}
               >
                 <Container>
@@ -37,12 +41,8 @@ const App = () => {
                     <Routes>
                       <Route path="/login/*" element={<Login />} />
                       <Route
-                        path="/"
-                        element={
-                          <AuthRoute>
-                            <Home />
-                          </AuthRoute>
-                        }
+                        path="/*"
+                        element={<Navigate replace to="/vote" />}
                       />
                       <Route
                         path="/vote"
