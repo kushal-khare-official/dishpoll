@@ -5,7 +5,7 @@ import { Box, Grid, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { FormTextField } from '../MuiComponents/TextFIeld'
 import { useSnackbarContext } from '../context/Snackbar'
-import * as firebaseService from '../service/firebase'
+import * as firebaseService from '../service/auth'
 
 const validationSchema = yup.object({
   email: yup
