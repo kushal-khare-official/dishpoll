@@ -1,27 +1,36 @@
 import { child, get, ref, remove, update } from 'firebase/database'
 
 import { db } from '../config/firebase'
+import { IDish } from '../interfaces/Dish'
 
 export const getVote = async () => {
+  const voteData: Record<string, any> = {}
   const dbRef = ref(db)
   const snapshot = await get(child(dbRef, `dishes`))
 
   if (!snapshot.exists()) {
     console.log('No data available')
-    return
-  }
-
-  const data = snapshot.val().dishes
-  const voteData: Record<string, any> = {}
-
-  for (let dishId in data) {
-    voteData[dishId] = 0
-    for (let uid in data[dishId]) {
-      voteData[dishId] += data[dishId][uid]
+  } else {
+    const data = snapshot.val()
+    for (let dishId in data) {
+      voteData[dishId] = 0
+      for (let uid in data[dishId]) {
+        voteData[dishId] += data[dishId][uid]
+      }
     }
   }
 
-  return voteData
+  const res = await fetch(
+    'https://raw.githubusercontent.com/syook/react-dishpoll/main/db.json'
+  )
+  const response = await res.json()
+
+  return response
+    .map((dish: IDish) => ({
+      ...dish,
+      points: voteData[dish.id] || 0,
+    }))
+    .sort((a: any, b: any) => b.points - a.points)
 }
 
 export const getDishVote = async (dishId?: number, uid?: string) => {
