@@ -16,7 +16,7 @@ export const SecondaryButton = styled(MuiButton)(() => ({
   padding: 0,
   borderRadius: '5px',
   minHeight: '48px',
-  minWidth: '300px',
+  minWidth: '132px',
   background: '#EEEEEE',
   color: '#0093E3',
   textTransform: 'uppercase',
