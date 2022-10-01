@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import {
   Card,
+  CardActions,
   CardContent,
   CardMedia,
   Typography,
@@ -8,50 +9,38 @@ import {
 import { VoteButton } from './Buttons'
 import { IDish } from '../interfaces/Dish'
 
-const DishCard = ({ item }: { item: IDish }) => {
+const DishCard = ({ item, openDialog }: { item: IDish, openDialog: () => void }) => {
   return (
     <Card
       sx={{
-        backgroundColor: '#EEEEEE',
-        margin: 'auto',
         position: 'relative',
-        maxWidth: 350,
-        height: 400,
-        borderRadius: '10px',
-        transition: '0s',
-        boxShadow:
-          '-12px -12px 24px #FFFFFF, 12px 12px 24px rgba(142, 209, 252, 0.25)',
-        '&:focus, &:hover': {
-          '.MuiCardMedia-root': {
-            transform: 'scale(1.2)',
-          },
-          '.MuiCardContent-root': {
-            transform: 'translateY(-100%)',
-          },
-        },
+        backgroundColor: '#FFFFFF',
+        m: 'auto',
+        mt: '150px',
+        height: '400px',
+        width: '95%',
+        borderRadius: '25px',
+        overflow: 'visible',
+        boxShadow: '0px 14px 80px rgb(34 35 58 / 20%)',
       }}
     >
       <CardMedia
         sx={{
-          position: 'relative',
+          transform: 'translateY(-50%)',
+          height: 250,
+          width: '90%',
           m: 'auto',
-          display: 'block',
-          height: 400,
-          width: '100%',
           backgroundPosition: 'center',
-          transition: 'all .7s ease',
+          boxShadow: '4px 13px 30px 1px rgb(252 56 56 / 20%)',
+          borderRadius: '20px',
         }}
         image={`${item.image}`}
       />
       <CardContent
         sx={{
-          position: 'relative',
-          zIndex: '2',
-          p: 1,
-          pb: '0 !important',
-          color: 'white',
-          transform: 'translateY(-50px)',
-          transition: 'all .3s ease',
+          mt: '-100px',
+          textAlign: 'center',
+          p: '0 30px',
         }}
       >
         <Typography
@@ -60,11 +49,10 @@ const DishCard = ({ item }: { item: IDish }) => {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             m: 2,
-            mt: 0,
           }}
           variant="h2"
-          fontWeight="300"
-          textAlign="left"
+          fontWeight="500"
+          textAlign="center"
           gutterBottom
         >
           {item.dishName}
@@ -75,14 +63,26 @@ const DishCard = ({ item }: { item: IDish }) => {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
-          variant="body2"
-          textAlign="left"
+          variant="h6"
+          color="text.secondary"
+          textAlign="center"
           gutterBottom
         >
-          {item.description}
+          {item.description.substring(0, 120) + '...'}
         </Typography>
-        <VoteButton>Vote</VoteButton>
       </CardContent>
+      <CardActions
+        sx={{
+          position: 'absolute',
+          width: '150px',
+          pb: 1.5,
+          bottom: '0',
+          ml: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        <VoteButton onClick={openDialog}>Vote</VoteButton>
+      </CardActions>
     </Card>
   )
 }
