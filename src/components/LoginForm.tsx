@@ -8,13 +8,10 @@ import { useSnackbarContext } from '../context/Snackbar'
 import * as firebaseService from '../service/auth'
 
 const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email('Enter a valid email')
-    .required('Email is required'),
+  userName: yup.string().required('UserName is required'),
   password: yup
     .string()
-    .min(8, 'Password should be of minimum 8 characters length')
+    .min(4, 'Password should be of minimum 4 characters length')
     .required('Password is required'),
 })
 
@@ -26,7 +23,7 @@ const LoginForm = () => {
 
   const handleSubmit = (values: any, setSubmitting: any) => {
     firebaseService
-      .login(values.email, values.password)
+      .login(values.userName, values.password)
       .then(() => {
         setSubmitting(false)
         navigate('/')
@@ -39,7 +36,7 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      userName: '',
       password: '',
     },
     validationSchema: validationSchema,
@@ -62,19 +59,19 @@ const LoginForm = () => {
             variant="subtitle2"
             color="text.secondary"
           >
-            Your Email Address *
+            Your User Name *
           </Typography>
           <FormTextField
             required
             fullWidth
-            autoComplete="email"
+            autoComplete="userName"
             autoFocus
-            id="email"
-            name="email"
-            value={formik.values.email}
+            id="userName"
+            name="userName"
+            value={formik.values.userName}
             onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.userName && Boolean(formik.errors.userName)}
+            helperText={formik.touched.userName && formik.errors.userName}
           />
         </Grid>
         <Grid item xs={12}>

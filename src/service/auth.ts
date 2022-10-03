@@ -2,28 +2,30 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
 } from 'firebase/auth'
-import { auth } from '../config/firebase'
+import { child, get, ref, set } from 'firebase/database'
+import { auth, db } from '../config/firebase'
 
 export const signup = async (
-  firstName: string,
-  lastName: string,
+  userName: string,
   email: string,
-  password: string,
-  confirmPassword: string
+  password: string
 ) => {
-  if (password !== confirmPassword) throw new Error('Passwords do not match')
+  await set(ref(db, `users/${userName}`), email)
 
   await createUserWithEmailAndPassword(auth, email, password)
-
-  if (auth.currentUser)
-    await updateProfile(auth.currentUser, {
-      displayName: firstName + ' ' + lastName,
-    })
 }
 
-export const login = async (email: string, password: string) => {
+export const login = async (userName: string, password: string) => {
+  const dbRef = ref(db)
+  const snapshot = await get(child(dbRef, `users/${userName}`))
+
+  if (!snapshot.exists()) {
+    throw new Error('No User Found')
+  }
+
+  const email = snapshot.val()
+
   await signInWithEmailAndPassword(auth, email, password)
 }
 
