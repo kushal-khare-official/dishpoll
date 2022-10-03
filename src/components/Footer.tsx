@@ -6,7 +6,7 @@ import {
   AlternateEmail,
   Favorite,
 } from '@mui/icons-material'
-import footerLogo from '../assets/logo.jpg'
+import footerLogo from '../assets/logo_with_bg.webp'
 
 const Footer = () => {
   return (
@@ -22,7 +22,7 @@ const Footer = () => {
             src={footerLogo}
             sx={{
               position: 'absolute',
-              top: '-100px',
+              top: '-120px',
               left: '50px',
               width: 100,
               height: 100,

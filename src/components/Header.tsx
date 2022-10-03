@@ -8,7 +8,7 @@ import NavItem from './NavItem'
 import { AuthContext } from '../context/AuthContext'
 import { useSnackbarContext } from '../context/Snackbar'
 import { logout } from '../service/auth'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.webp'
 
 const Header = () => {
   const user = useContext(AuthContext)

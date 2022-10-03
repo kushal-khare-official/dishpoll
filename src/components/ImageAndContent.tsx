@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography } from '@mui/material'
 
-import LandingImage from '../assets/landingImage.png'
+import LandingImage from '../assets/landingImage.webp'
 
 export const ImageAndContent = () => {
   return (
