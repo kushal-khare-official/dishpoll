@@ -9,7 +9,7 @@ export const getVote = async () => {
   const snapshot = await get(child(dbRef, `dishes`))
 
   if (!snapshot.exists()) {
-    console.log('No data available')
+    throw new Error('No data available')
   } else {
     const data = snapshot.val()
     for (let dishId in data) {
@@ -37,10 +37,7 @@ export const getDishVote = async (dishId?: number, uid?: string) => {
   const dbRef = ref(db)
   const snapshot = await get(child(dbRef, `dishes/${dishId}/${uid}`))
 
-  if (!snapshot.exists()) {
-    console.log('No data available')
-    return
-  }
+  if (!snapshot.exists()) throw new Error('No data available')
 
   return snapshot.val()
 }

@@ -34,7 +34,7 @@ const Vote = () => {
               </Grid>
             ))}
       </Grid>
-      <VoteDialog dish={selDish} close={() => setSelDish(null)} />
+      {selDish && <VoteDialog dish={selDish} close={() => setSelDish(null)} />}
     </>
   )
 }
