@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import {
   Avatar,
   Box,
   Paper,
+  Stack,
   SvgIcon,
   Table,
   TableBody,
@@ -10,22 +12,29 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import { Stack } from '@mui/system'
-import { useEffect, useState } from 'react'
+import { useSnackbarContext } from '../context/Snackbar'
 import { StyledTableCell, StyledTableRow } from '../MuiComponents/Table'
 import { getVote } from '../service/vote'
 import './Results.css'
 
 const Results = () => {
   const [votes, setVotes] = useState<any>([])
+  const {
+    ToastService: { showToast },
+  } = useSnackbarContext()
 
   useEffect(() => {
     const getData = async () => {
-      setVotes(await getVote())
+      try {
+        const data = await getVote()
+        setVotes(data)
+      } catch (err: any) {
+        showToast(true, 'error', err, 'center')
+      }
     }
 
     getData()
-  }, [])
+  }, [showToast])
 
   return (
     <>

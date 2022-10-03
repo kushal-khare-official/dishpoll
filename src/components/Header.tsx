@@ -8,7 +8,7 @@ import NavItem from './NavItem'
 import { AuthContext } from '../context/AuthContext'
 import { useSnackbarContext } from '../context/Snackbar'
 import { logout } from '../service/auth'
-import logo from '../assets/landingImage.png'
+import logo from '../assets/logo.webp'
 
 const Header = () => {
   const user = useContext(AuthContext)
@@ -67,12 +67,10 @@ const Header = () => {
     <StyledAppbar>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* app logo */}
           <Link to="/home">
             <Box
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-              width="151px"
-              height="78px"
+              height="100px"
               component={'img'}
               src={logo}
               alt="LOGO"
