@@ -15,13 +15,7 @@ function SignUpEmail() {
 
   const handleSubmit = (values: any, setSubmitting: any) => {
     firebaseService
-      .signup(
-        values.firstName,
-        values.lastName,
-        values.email,
-        values.password,
-        values.confirmPassword
-      )
+      .signup(values.userName, values.email, values.password)
       .then(() => {
         setSubmitting(false)
         navigate('/')
@@ -33,26 +27,24 @@ function SignUpEmail() {
   }
 
   const validationSchema = yup.object({
-    firstName: yup.string().required('First Name is required'),
-    lastName: yup.string().required('Last Name is required'),
+    userName: yup.string().required('UserName is required'),
     email: yup
       .string()
       .email('Enter a valid email')
       .required('Email is required'),
     password: yup
       .string()
-      .min(8, 'Password should be of minimum 8 characters length')
+      .min(4, 'Password should be of minimum 4 characters length')
       .required('Password is required'),
     confirmPassword: yup
       .string()
-      .min(8, 'Password should be of minimum 8 characters length')
+      .min(4, 'Password should be of minimum 4 characters length')
       .oneOf([yup.ref('password'), null], 'passwords do not match')
       .required('Confirm Password is required'),
   })
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      userName: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -71,45 +63,25 @@ function SignUpEmail() {
       sx={{ mt: 1 }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12}>
           <Typography
             component="label"
             variant="subtitle2"
             color="text.secondary"
           >
-            First Name *
+            Your User Name *
           </Typography>
           <FormTextField
             required
             fullWidth
-            autoComplete="given-name"
+            autoComplete="username"
             autoFocus
-            id="firstName"
-            name="firstName"
-            value={formik.values.firstName}
+            id="userName"
+            name="userName"
+            value={formik.values.userName}
             onChange={formik.handleChange}
-            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-            helperText={formik.touched.firstName && formik.errors.firstName}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <Typography
-            component="label"
-            variant="subtitle2"
-            color="text.secondary"
-          >
-            Last Name *
-          </Typography>
-          <FormTextField
-            required
-            fullWidth
-            autoComplete="family-name"
-            id="lastName"
-            name="lastName"
-            value={formik.values.lastName}
-            onChange={formik.handleChange}
-            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-            helperText={formik.touched.lastName && formik.errors.lastName}
+            error={formik.touched.userName && Boolean(formik.errors.userName)}
+            helperText={formik.touched.userName && formik.errors.userName}
           />
         </Grid>
         <Grid item xs={12}>
@@ -189,7 +161,13 @@ function SignUpEmail() {
       >
         Sign Up
       </LoadingButton>
-      <Typography variant="h4" component="h3" color="text.secondary" paragraph>
+      <Typography
+        variant="h6"
+        component="h3"
+        fontWeight="500"
+        color="text.secondary"
+        paragraph
+      >
         Already have an account?{' '}
         <span
           style={{ color: '#0093E3', cursor: 'pointer' }}
